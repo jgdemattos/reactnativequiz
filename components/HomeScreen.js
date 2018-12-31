@@ -5,10 +5,14 @@ import {
   createStackNavigator,
   StackActions,
   NavigationActions
-} from "react-navigation"; // Version can be specified in package.json
+} from "react-navigation";
 import DeckList from "./DeckList";
+import DeckOptions from "./DeckOptions";
+import DeckPlay from "./DeckPlay";
+import NewQuestion from "./NewQuestion";
 import { connect } from "react-redux";
 import { receiveDecks } from "../actions/index.js";
+
 class HomeScreen extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
@@ -19,12 +23,12 @@ class HomeScreen extends React.Component {
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <Text>Home Screen</Text>
         <Button
-          title="Go to Details"
+          title="Go to Deck List"
           onPress={() => {
             this.props.navigation.dispatch(
               StackActions.reset({
                 index: 0,
-                actions: [NavigationActions.navigate({ routeName: "Details" })]
+                actions: [NavigationActions.navigate({ routeName: "DeckList" })]
               })
             );
           }}
@@ -62,8 +66,17 @@ const AppNavigator = createStackNavigator(
     Home: {
       screen: connect()(HomeScreen)
     },
-    Details: {
+    DeckList: {
       screen: DeckList
+    },
+    DeckOptions: {
+      screen: DeckOptions
+    },
+    DeckPlay: {
+      screen: DeckPlay
+    },
+    NewQuestion: {
+      screen: NewQuestion
     }
   },
   {

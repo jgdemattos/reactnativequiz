@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
-class DeckItem extends React.Component {
+class DeckPlay extends React.Component {
   render() {
     const deck = this.props.deck;
     return (
@@ -11,7 +11,6 @@ class DeckItem extends React.Component {
     );
   }
 }
-
 const styles = StyleSheet.create({
   item: {
     flex: 1,
@@ -31,5 +30,4 @@ const styles = StyleSheet.create({
     elevation: 3
   }
 });
-
-export default DeckItem;
+export default DeckPlay;

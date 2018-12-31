@@ -23,7 +23,19 @@ class DeckList extends React.Component {
       <View style={styles.container}>
         <FlatList
           data={decks}
-          renderItem={({ item }) => <DeckItem deck={item.key} />}
+          renderItem={({ item }) => {
+            return (
+              <TouchableOpacity
+                onPress={() =>
+                  this.props.navigation.navigate("DeckOptions", {
+                    entryId: item.key
+                  })
+                }
+              >
+                <DeckItem deck={item.key} />
+              </TouchableOpacity>
+            );
+          }}
         />
       </View>
     );
@@ -43,23 +55,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     flexDirection: "row",
     alignItems: "stretch"
-  },
-  item: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "stretch",
-    justifyContent: "center",
-    borderRadius: 2,
-    backgroundColor: "white",
-    padding: 20,
-    marginLeft: 10,
-    marginRight: 10,
-    marginTop: 8,
-    marginBottom: 8,
-    shadowOffset: { width: 10, height: 10 },
-    shadowColor: "black",
-    shadowOpacity: 1,
-    elevation: 3
   }
 });
 
