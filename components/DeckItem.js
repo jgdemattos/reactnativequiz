@@ -3,10 +3,11 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 class DeckItem extends React.Component {
   render() {
-    const deck = this.props.deck;
+    const { deck, cardNum } = this.props;
     return (
       <View style={styles.item}>
         <Text>{deck}</Text>
+        <Text>cards: {cardNum}</Text>
       </View>
     );
   }
@@ -15,7 +16,7 @@ class DeckItem extends React.Component {
 const styles = StyleSheet.create({
   item: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "stretch",
     justifyContent: "center",
     borderRadius: 2,
