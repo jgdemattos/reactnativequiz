@@ -10,13 +10,15 @@ import DeckList from "./DeckList";
 import DeckOptions from "./DeckOptions";
 import DeckPlay from "./DeckPlay";
 import NewQuestion from "./NewQuestion";
+import NewDeck from "./NewDeck";
 import { connect } from "react-redux";
-import { receiveDecks } from "../actions/index.js";
+import { receiveDecks, receiveCards } from "../actions/index.js";
 
 class HomeScreen extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(receiveDecks({ decks }));
+    dispatch(receiveCards({ cards }));
   }
   render() {
     return (
@@ -51,15 +53,26 @@ const decks = {
     deckName: "my TARD Deck"
   }
 };
-class DetailsScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Details Screen</Text>
-      </View>
-    );
+const cards = {
+  "0": {
+    key: "0",
+    deck: "0",
+    question: "qunto e 2+2",
+    answer: "4"
+  },
+  "1": {
+    key: "1",
+    deck: "0",
+    question: "qunto e 4+4",
+    answer: "8"
+  },
+  "2": {
+    key: "2",
+    deck: "0",
+    question: "qunto e 8+8",
+    answer: "16"
   }
-}
+};
 
 const AppNavigator = createStackNavigator(
   {
@@ -77,6 +90,9 @@ const AppNavigator = createStackNavigator(
     },
     NewQuestion: {
       screen: NewQuestion
+    },
+    NewDeck: {
+      screen: NewDeck
     }
   },
   {

@@ -4,7 +4,8 @@ import {
   Text,
   View,
   FlatList,
-  TouchableOpacity
+  TouchableOpacity,
+  Button
 } from "react-native";
 import { connect } from "react-redux";
 import DeckItem from "./DeckItem";
@@ -32,10 +33,16 @@ class DeckList extends React.Component {
                   })
                 }
               >
-                <DeckItem deck={item.key} />
+                <DeckItem deck={item.deckName} />
               </TouchableOpacity>
             );
           }}
+        />
+        <Button
+          onPress={() => this.props.navigation.navigate("NewDeck", {})}
+          title="New deck"
+          color="#841584"
+          accessibilityLabel="create new deck"
         />
       </View>
     );
@@ -53,7 +60,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "stretch"
   }
 });

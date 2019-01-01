@@ -7,11 +7,27 @@ import {
   TouchableOpacity,
   Button
 } from "react-native";
+import { connect } from "react-redux";
+import { addCard } from "../actions/index.js";
 
 class NewQuestion extends React.Component {
   state = {
     question: "",
     answer: ""
+  };
+  handleAddQuestion = () => {
+    const { dispatch } = this.props;
+    const { question, answer } = this.state;
+    dispatch(
+      addCard({
+        question,
+        answer,
+        deck: this.props.navigation.state.params.entryId
+      })
+    );
+    this.props.navigation.navigate("DeckOptions", {
+      entryId: this.props.navigation.state.params.entryId
+    });
   };
   render() {
     const deck = this.props.deck;
@@ -34,11 +50,7 @@ class NewQuestion extends React.Component {
           />
         </View>
         <Button
-          onPress={() =>
-            this.props.navigation.navigate("DeckOptions", {
-              entryId: this.props.navigation.state.params.entryId
-            })
-          }
+          onPress={this.handleAddQuestion}
           title="Send"
           color="#841584"
           accessibilityLabel="add question"
@@ -69,4 +81,4 @@ const styles = StyleSheet.create({
     elevation: 3
   }
 });
-export default NewQuestion;
+export default connect()(NewQuestion);

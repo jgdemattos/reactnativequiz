@@ -13,7 +13,7 @@ class FadeInView extends React.Component {
       this.state.fadeAnim, // The animated value to drive
       {
         toValue: 1, // Animate to opacity: 1 (opaque)
-        duration: 10000 // Make it take a while
+        duration: 4000 // Make it take a while
       }
     ).start(); // Starts the animation
   }
@@ -40,6 +40,7 @@ class DeckOptions extends React.Component {
       <View style={styles.container}>
         <FadeInView style={styles.fade}>
           <Text>{this.props.deck.deckName}</Text>
+          <Text>{"number of cards: " + this.props.cardNum}</Text>
           <Button
             style={styles.item}
             onPress={() =>
@@ -92,9 +93,13 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapStateToProps({ decks }, { navigation }) {
+function mapStateToProps({ decks, cards }, { navigation }) {
+  const deck = decks[navigation.state.params.entryId];
+
+  const cardNum = Object.values(cards).filter(card => card.deck === deck.key);
   return {
-    deck: decks[navigation.state.params.entryId]
+    deck,
+    cardNum: cardNum.length
   };
 }
 

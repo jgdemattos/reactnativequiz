@@ -1,20 +1,94 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Button } from "react-native";
+import { connect } from "react-redux";
 
 class DeckPlay extends React.Component {
+  state = {
+    currentCard: 0,
+    showAnswer: false,
+    score: 0
+  };
   render() {
-    const deck = this.props.deck;
+    if (this.state.currentCard + 1 > this.props.selectedCards.length) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.result}>
+            Score:{this.state.score + "/" + this.props.selectedCards.length}{" "}
+          </Text>
+          <View style={styles.menu}>
+            <Button
+              onPress={() =>
+                this.setState({
+                  score: 0,
+                  currentCard: 0,
+                  showAnswer: false
+                })
+              }
+              title="Restart quiz"
+              color="green"
+            />
+            <Button
+              onPress={() =>
+                this.props.navigation.navigate("DeckOptions", {
+                  entryId: this.props.navigation.state.params.entryId
+                })
+              }
+              title="Beck to deck"
+              color="blue"
+            />
+          </View>
+        </View>
+      );
+    }
     return (
-      <View style={styles.item}>
-        <Text>{deck}</Text>
+      <View style={styles.container}>
+        <Text style={styles.numQuestions}>
+          {this.state.currentCard + 1 + "/" + this.props.selectedCards.length}
+        </Text>
+        <Text>Question: </Text>
+        <Text>{this.props.selectedCards[this.state.currentCard].question}</Text>
+        <Button
+          onPress={() => this.setState({ showAnswer: true })}
+          title="show answer"
+          color="#841584"
+          accessibilityLabel="Play this deck"
+        />
+        {this.state.showAnswer && (
+          <Text>{this.props.selectedCards[this.state.currentCard].answer}</Text>
+        )}
+        <View style={styles.menu}>
+          <Button
+            onPress={() =>
+              this.setState({
+                score: this.state.score + 1,
+                currentCard: this.state.currentCard + 1,
+                showAnswer: false
+              })
+            }
+            title="Correct"
+            color="green"
+            accessibilityLabel="Play this deck"
+          />
+          <Button
+            onPress={() =>
+              this.setState({
+                currentCard: this.state.currentCard + 1,
+                showAnswer: false
+              })
+            }
+            title="Incorrect"
+            color="red"
+            accessibilityLabel="Play this deck"
+          />
+        </View>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
-  item: {
+  container: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "stretch",
     justifyContent: "center",
     borderRadius: 2,
@@ -28,6 +102,28 @@ const styles = StyleSheet.create({
     shadowColor: "black",
     shadowOpacity: 1,
     elevation: 3
+  },
+  menu: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  numQuestions: {
+    alignSelf: "flex-end"
+  },
+  result: {
+    alignSelf: "center"
   }
 });
-export default DeckPlay;
+
+function mapStateToProps({ cards }, { navigation }) {
+  const selectedCards = Object.values(cards).filter(
+    card => card.deck === navigation.state.params.entryId
+  );
+  return {
+    selectedCards
+  };
+}
+
+export default connect(mapStateToProps)(DeckPlay);
