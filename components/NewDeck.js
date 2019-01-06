@@ -15,6 +15,7 @@ class NewDeck extends React.Component {
     deckName: "",
     successfullyCreated: null
   };
+  handleGoToOptions = () => {};
   handleAddDeck = () => {
     const { dispatch } = this.props;
     const { deckName } = this.state;
@@ -23,21 +24,21 @@ class NewDeck extends React.Component {
         deckName
       })
     );
-    this.setState({ successfullyCreated: true });
+    this.props.navigation.navigate("DeckOptions", {
+      entryId: this.props.lastId
+    });
+  };
+  handleAddDeckName = deckName => {
+    this.setState({ deckName });
   };
   render() {
-    if (this.state.successfullyCreated) {
-      this.props.navigation.navigate("DeckOptions", {
-        entryId: this.props.lastId
-      });
-    }
     return (
       <View style={styles.item}>
         <View style={styles.item}>
           <Text>Deck name</Text>
           <TextInput
             style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
-            onChangeText={deckName => this.setState({ deckName })}
+            onChangeText={deckName => this.handleAddDeckName(deckName)}
             value={this.state.deckName}
           />
         </View>
@@ -75,7 +76,6 @@ const styles = StyleSheet.create({
 });
 function mapStateToProps({ decks }) {
   const decksArray = Object.values(decks).map(deck => deck);
-  console.log(decksArray[decksArray.length - 1]);
 
   return {
     lastId: decksArray[decksArray.length - 1].key
