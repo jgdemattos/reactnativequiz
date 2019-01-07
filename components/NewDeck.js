@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  TouchableOpacity,
-  Button
-} from "react-native";
+import { StyleSheet, Text, TextInput, View, Button } from "react-native";
 import { connect } from "react-redux";
 import { addDeck } from "../actions/index.js";
 

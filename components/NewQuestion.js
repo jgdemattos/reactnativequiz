@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  TouchableOpacity,
-  Button
-} from "react-native";
+import { StyleSheet, Text, TextInput, View, Button } from "react-native";
 import { connect } from "react-redux";
 import { addCard } from "../actions/index.js";
 
@@ -30,7 +23,6 @@ class NewQuestion extends React.Component {
     });
   };
   render() {
-    const deck = this.props.deck;
     return (
       <View style={styles.item}>
         <View style={styles.item}>

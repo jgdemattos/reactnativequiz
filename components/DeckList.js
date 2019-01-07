@@ -109,19 +109,19 @@ const cards = {
   "0": {
     key: "0",
     deck: "0",
-    question: "qunto e 2+2",
+    question: "quanto e 2+2",
     answer: "4"
   },
   "1": {
     key: "1",
     deck: "0",
-    question: "qunto e 4+4",
+    question: "quanto e 4+4",
     answer: "8"
   },
   "2": {
     key: "2",
     deck: "0",
-    question: "qunto e 8+8",
+    question: "quanto e 8+8",
     answer: "16"
   }
 };
