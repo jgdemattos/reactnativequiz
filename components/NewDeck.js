@@ -6,7 +6,8 @@ import { addDeck } from "../actions/index.js";
 class NewDeck extends React.Component {
   state = {
     deckName: "",
-    successfullyCreated: null
+    successfullyCreated: null,
+    created: false
   };
   handleGoToOptions = () => {};
   handleAddDeck = () => {
@@ -17,13 +18,23 @@ class NewDeck extends React.Component {
         deckName
       })
     );
-    this.props.navigation.navigate("DeckOptions", {
-      entryId: this.props.lastId
-    });
+    this.setState({ created: true });
   };
   handleAddDeckName = deckName => {
     this.setState({ deckName });
   };
+  handleAddDeckName = deckName => {
+    this.setState({ deckName });
+  };
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState.created) {
+      nextProps.navigation.navigate("DeckOptions", {
+        entryId: nextProps.lastId
+      });
+      return false;
+    }
+    return true;
+  }
   render() {
     return (
       <View style={styles.item}>
@@ -67,7 +78,8 @@ const styles = StyleSheet.create({
     elevation: 3
   }
 });
-function mapStateToProps({ decks }) {
+
+function mapStateToProps({ created, decks }) {
   const decksArray = Object.values(decks).map(deck => deck);
 
   return {
