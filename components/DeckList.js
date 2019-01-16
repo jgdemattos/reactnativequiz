@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   Button
 } from "react-native";
-import { connect } from "react-redux";
 import DeckItem from "./DeckItem";
 import {
   createAppContainer,
@@ -19,14 +18,11 @@ import DeckOptions from "./DeckOptions";
 import DeckPlay from "./DeckPlay";
 import NewQuestion from "./NewQuestion";
 import NewDeck from "./NewDeck";
-import { receiveDecks, receiveCards } from "../actions/index.js";
+
+import { Query } from "react-apollo";
+import { GET_ALL_DECKS } from "../queries";
 
 class DeckList extends React.Component {
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(receiveDecks({ decks }));
-    dispatch(receiveCards({ cards }));
-  }
   cards = {
     0: {
       deck: 0,
@@ -35,35 +31,45 @@ class DeckList extends React.Component {
   };
 
   render() {
-    const { decks, cards } = this.props;
-    if (!decks.length) {
-      return <View style={styles.container} />;
-    }
+    //const { decks, cards } = this.props;
 
     return (
       <View style={styles.container}>
-        {
-          <FlatList
-            data={decks}
-            renderItem={({ item }) => {
-              const cardNum = Object.values(cards).filter(
-                card => card.deck === item.key
-              );
+        <Query query={GET_ALL_DECKS}>
+          {({ data, loading, error }) => {
+            if (loading) return <Text>Loading</Text>;
+            if (error) return <Text>Error</Text>;
+            console.log(data);
+            decks = data.getAllDecks;
+            cards = data.getAllCards;
+            if (!decks.length) {
+              return <View style={styles.container} />;
+            }
+            return (
+              <FlatList
+                data={decks}
+                keyExtractor={(item, index) => item._id}
+                renderItem={({ item }) => {
+                  const cardNum = Object.values(cards).filter(
+                    card => card.deckId === item._id
+                  );
 
-              return (
-                <TouchableOpacity
-                  onPress={() =>
-                    this.props.navigation.navigate("DeckOptions", {
-                      entryId: item.key
-                    })
-                  }
-                >
-                  <DeckItem deck={item.deckName} cardNum={cardNum.length} />
-                </TouchableOpacity>
-              );
-            }}
-          />
-        }
+                  return (
+                    <TouchableOpacity
+                      onPress={() =>
+                        this.props.navigation.navigate("DeckOptions", {
+                          entryId: item._id
+                        })
+                      }
+                    >
+                      <DeckItem deck={item.name} cardNum={cardNum.length} />
+                    </TouchableOpacity>
+                  );
+                }}
+              />
+            );
+          }}
+        </Query>
         <Button
           onPress={() => this.props.navigation.navigate("NewDeck", {})}
           title="New deck"
@@ -75,13 +81,6 @@ class DeckList extends React.Component {
   }
 }
 
-function mapStateToProps({ cards, decks, stackBar }) {
-  return {
-    decks: Object.values(decks).map(deck => deck),
-    cards
-  };
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -91,45 +90,10 @@ const styles = StyleSheet.create({
   }
 });
 
-const decks = {
-  "0": {
-    key: "0",
-    deckName: "my First Deck"
-  },
-  "1": {
-    key: "1",
-    deckName: "my SECOND Deck"
-  },
-  "2": {
-    key: "2",
-    deckName: "my TARD Deck"
-  }
-};
-const cards = {
-  "0": {
-    key: "0",
-    deck: "0",
-    question: "quanto e 2+2",
-    answer: "4"
-  },
-  "1": {
-    key: "1",
-    deck: "0",
-    question: "quanto e 4+4",
-    answer: "8"
-  },
-  "2": {
-    key: "2",
-    deck: "0",
-    question: "quanto e 8+8",
-    answer: "16"
-  }
-};
-
 const AppNavigator = createStackNavigator(
   {
     DeckList: {
-      screen: connect(mapStateToProps)(DeckList)
+      screen: DeckList
     },
     DeckOptions: {
       screen: DeckOptions
