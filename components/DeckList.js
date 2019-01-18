@@ -39,7 +39,6 @@ class DeckList extends React.Component {
           {({ data, loading, error }) => {
             if (loading) return <Text>Loading</Text>;
             if (error) return <Text>Error</Text>;
-            console.log(data);
             decks = data.getAllDecks;
             cards = data.getAllCards;
             if (!decks.length) {

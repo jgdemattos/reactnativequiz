@@ -1,6 +1,8 @@
 import React from "react";
 import { Animated, StyleSheet, View, Text, Button } from "react-native";
-import { connect } from "react-redux";
+
+import { Query } from "react-apollo";
+import { GET_DECK } from "../queries";
 
 class FadeInView extends React.Component {
   state = {
@@ -38,32 +40,46 @@ class DeckOptions extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <FadeInView style={styles.fade}>
-          <Text>{this.props.deck.deckName}</Text>
-          <Text>{"number of cards: " + this.props.cardNum}</Text>
-          <Button
-            style={styles.item}
-            onPress={() =>
-              this.props.navigation.navigate("NewQuestion", {
-                entryId: this.props.deck.key
-              })
-            }
-            title="Create New Question"
-            color="#CCC"
-            accessibilityLabel="Edit this deck"
-          />
-          <Button
-            style={styles.item}
-            onPress={() =>
-              this.props.navigation.navigate("DeckPlay", {
-                entryId: this.props.deck.key
-              })
-            }
-            title="Start a Quiz"
-            color="#841584"
-            accessibilityLabel="Play this deck"
-          />
-        </FadeInView>
+        <Query
+          query={GET_DECK}
+          variables={{ _id: this.props.navigation.state.params.entryId }}
+        >
+          {({ data, loading, error }) => {
+            if (loading) return <Text>Loading</Text>;
+            if (error) return <Text>Error</Text>;
+            deck = data.getDeck;
+            cardNum = data.getCardsOf.length;
+
+            return (
+              <FadeInView style={styles.fade}>
+                <Text>{deck.deckName}</Text>
+                <Text>{"number of cards: " + cardNum}</Text>
+                <Button
+                  style={styles.item}
+                  onPress={() =>
+                    this.props.navigation.navigate("NewQuestion", {
+                      entryId: deck._id
+                    })
+                  }
+                  title="Create New Question"
+                  color="#CCC"
+                  accessibilityLabel="Edit this deck"
+                />
+                <Button
+                  style={styles.item}
+                  onPress={() =>
+                    this.props.navigation.navigate("DeckPlay", {
+                      entryId: deck._id
+                    })
+                  }
+                  title="Start a Quiz"
+                  color="#841584"
+                  accessibilityLabel="Play this deck"
+                />
+              </FadeInView>
+            );
+          }}
+        </Query>
       </View>
     );
   }
@@ -93,14 +109,4 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapStateToProps({ decks, cards }, { navigation }) {
-  const deck = decks[navigation.state.params.entryId];
-
-  const cardNum = Object.values(cards).filter(card => card.deck === deck.key);
-  return {
-    deck,
-    cardNum: cardNum.length
-  };
-}
-
-export default connect(mapStateToProps)(DeckOptions);
+export default DeckOptions;
