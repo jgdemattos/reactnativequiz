@@ -1,53 +1,63 @@
 import React from "react";
 import { StyleSheet, Text, TextInput, View, Button } from "react-native";
-import { connect } from "react-redux";
 import { addCard } from "../actions/index.js";
+
+import { Mutation } from "react-apollo";
+import { ADD_CARD, GET_ALL_CARDS } from "../queries";
 
 class NewQuestion extends React.Component {
   state = {
     question: "",
     answer: ""
   };
-  handleAddQuestion = () => {
-    const { dispatch } = this.props;
+  handleAddQuestion = addCard => {
+    const { entryId } = this.props.navigation.state.params;
     const { question, answer } = this.state;
-    dispatch(
-      addCard({
-        question,
-        answer,
-        deck: this.props.navigation.state.params.entryId
-      })
-    );
+
+    addCard({ variables: { deckId: entryId, question, answer } });
     this.props.navigation.navigate("DeckOptions", {
-      entryId: this.props.navigation.state.params.entryId
+      entryId
     });
   };
   render() {
     return (
-      <View style={styles.item}>
-        <View style={styles.item}>
-          <Text>Question</Text>
-          <TextInput
-            style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
-            onChangeText={question => this.setState({ question })}
-            value={this.state.question}
-          />
-        </View>
-        <View style={styles.item}>
-          <Text>Answer</Text>
-          <TextInput
-            style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
-            onChangeText={answer => this.setState({ answer })}
-            value={this.state.answer}
-          />
-        </View>
-        <Button
-          onPress={this.handleAddQuestion}
-          title="Send"
-          color="#841584"
-          accessibilityLabel="add question"
-        />
-      </View>
+      <Mutation
+        mutation={ADD_CARD}
+        update={(cache, { data: { addCard } }) => {
+          const { getAllCards } = cache.readQuery({ query: GET_ALL_CARDS });
+          cache.writeQuery({
+            query: GET_ALL_CARDS,
+            data: { getAllCards: getAllCards.concat([addCard]) }
+          });
+        }}
+      >
+        {(addCard, { data }) => (
+          <View style={styles.item}>
+            <View style={styles.item}>
+              <Text>Question</Text>
+              <TextInput
+                style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
+                onChangeText={question => this.setState({ question })}
+                value={this.state.question}
+              />
+            </View>
+            <View style={styles.item}>
+              <Text>Answer</Text>
+              <TextInput
+                style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
+                onChangeText={answer => this.setState({ answer })}
+                value={this.state.answer}
+              />
+            </View>
+            <Button
+              onPress={() => this.handleAddQuestion(addCard)}
+              title="Send"
+              color="#841584"
+              accessibilityLabel="add question"
+            />
+          </View>
+        )}
+      </Mutation>
     );
   }
 }
@@ -73,4 +83,4 @@ const styles = StyleSheet.create({
     elevation: 3
   }
 });
-export default connect()(NewQuestion);
+export default NewQuestion;
