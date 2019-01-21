@@ -31,8 +31,6 @@ class DeckList extends React.Component {
   };
 
   render() {
-    //const { decks, cards } = this.props;
-
     return (
       <View style={styles.container}>
         <Query query={GET_ALL_DECKS}>
@@ -44,6 +42,7 @@ class DeckList extends React.Component {
             if (!decks.length) {
               return <View style={styles.container} />;
             }
+
             return (
               <FlatList
                 data={decks}

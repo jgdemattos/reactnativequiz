@@ -37,6 +37,16 @@ export const ADD_CARD = gql`
     }
   }
 `;
+
+export const ADD_DECK = gql`
+  mutation AddDeck($name: String!) {
+    addDeck(name: $name) {
+      _id
+      name
+    }
+  }
+`;
+
 export const GET_DECK = gql`
   query Deck($_id: ID!) {
     getDeck(_id: $_id) {

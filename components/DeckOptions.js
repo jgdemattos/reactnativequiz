@@ -49,7 +49,6 @@ class DeckOptions extends React.Component {
             if (error) return <Text>Error</Text>;
             deck = data.getDeck;
             cards = data.getAllCards;
-
             //cardNum = data.getCardsOf.length;
             const cardNum = Object.values(cards).filter(
               card => card.deckId === this.props.navigation.state.params.entryId

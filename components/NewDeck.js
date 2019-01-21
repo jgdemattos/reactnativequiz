@@ -1,35 +1,34 @@
 import React from "react";
 import { StyleSheet, Text, TextInput, View, Button } from "react-native";
-import { connect } from "react-redux";
-import { addDeck } from "../actions/index.js";
+
+import { Mutation } from "react-apollo";
+import { ADD_DECK, GET_ALL_DECKS } from "../queries";
 
 class NewDeck extends React.Component {
   state = {
     deckName: "",
     successfullyCreated: null,
-    created: false
+    created: false,
+    nextId: null
   };
   handleGoToOptions = () => {};
-  handleAddDeck = () => {
-    const { dispatch } = this.props;
+  handleAddDeck = addDeck => {
     const { deckName } = this.state;
-    dispatch(
-      addDeck({
-        deckName
-      })
+
+    addDeck({ variables: { name: deckName } }).then(({ data }) =>
+      this.setState({ nextId: data.addDeck._id })
     );
-    this.setState({ created: true });
   };
   handleAddDeckName = deckName => {
     this.setState({ deckName });
   };
-  handleAddDeckName = deckName => {
+  /*   handleAddDeckName = deckName => {
     this.setState({ deckName });
-  };
+  }; */
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextState.created) {
+    if (nextState.nextId) {
       nextProps.navigation.navigate("DeckOptions", {
-        entryId: nextProps.lastId
+        entryId: nextState.nextId
       });
       return false;
     }
@@ -37,22 +36,38 @@ class NewDeck extends React.Component {
   }
   render() {
     return (
-      <View style={styles.item}>
-        <View style={styles.item}>
-          <Text>Deck name</Text>
-          <TextInput
-            style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
-            onChangeText={deckName => this.handleAddDeckName(deckName)}
-            value={this.state.deckName}
-          />
-        </View>
-        <Button
-          onPress={this.handleAddDeck}
-          title="Send"
-          color="#841584"
-          accessibilityLabel="add deck"
-        />
-      </View>
+      <Mutation
+        mutation={ADD_DECK}
+        update={(cache, { data: { addDeck } }) => {
+          const { getAllDecks, getAllCards } = cache.readQuery({
+            query: GET_ALL_DECKS
+          });
+
+          cache.writeQuery({
+            query: GET_ALL_DECKS,
+            data: { getAllDecks: getAllDecks.concat([addDeck]), getAllCards }
+          });
+        }}
+      >
+        {(addDeck, { data }) => (
+          <View style={styles.item}>
+            <View style={styles.item}>
+              <Text>Deck name</Text>
+              <TextInput
+                style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
+                onChangeText={deckName => this.handleAddDeckName(deckName)}
+                value={this.state.deckName}
+              />
+            </View>
+            <Button
+              onPress={() => this.handleAddDeck(addDeck)}
+              title="Send"
+              color="#841584"
+              accessibilityLabel="add deck"
+            />
+          </View>
+        )}
+      </Mutation>
     );
   }
 }
@@ -79,11 +94,4 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapStateToProps({ created, decks }) {
-  const decksArray = Object.values(decks).map(deck => deck);
-
-  return {
-    lastId: decksArray[decksArray.length - 1].key
-  };
-}
-export default connect(mapStateToProps)(NewDeck);
+export default NewDeck;

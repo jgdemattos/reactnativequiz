@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, TextInput, View, Button } from "react-native";
-import { addCard } from "../actions/index.js";
 
 import { Mutation } from "react-apollo";
 import { ADD_CARD, GET_ALL_CARDS } from "../queries";
