@@ -48,8 +48,12 @@ class DeckOptions extends React.Component {
             if (loading) return <Text>Loading</Text>;
             if (error) return <Text>Error</Text>;
             deck = data.getDeck;
-            cardNum = data.getCardsOf.length;
+            cards = data.getAllCards;
 
+            //cardNum = data.getCardsOf.length;
+            const cardNum = Object.values(cards).filter(
+              card => card.deckId === this.props.navigation.state.params.entryId
+            ).length;
             return (
               <FadeInView style={styles.fade}>
                 <Text>{deck.deckName}</Text>

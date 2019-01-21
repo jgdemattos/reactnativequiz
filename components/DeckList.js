@@ -51,7 +51,7 @@ class DeckList extends React.Component {
                 renderItem={({ item }) => {
                   const cardNum = Object.values(cards).filter(
                     card => card.deckId === item._id
-                  );
+                  ).length;
 
                   return (
                     <TouchableOpacity
@@ -61,7 +61,7 @@ class DeckList extends React.Component {
                         })
                       }
                     >
-                      <DeckItem deck={item.name} cardNum={cardNum.length} />
+                      <DeckItem deck={item.name} cardNum={cardNum} />
                     </TouchableOpacity>
                   );
                 }}

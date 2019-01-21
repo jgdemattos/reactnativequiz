@@ -43,9 +43,11 @@ export const GET_DECK = gql`
       _id
       name
     }
-
-    getCardsOf(_id: $_id) {
+    getAllCards {
       _id
+      deckId
+      question
+      answer
     }
   }
 `;
