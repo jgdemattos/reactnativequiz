@@ -1,9 +1,5 @@
 import React from "react";
-import TestView from "./components/TestView";
 import DeckList from "./components/DeckList";
-import { createStore } from "redux";
-import { Provider } from "react-redux";
-import reducer from "./reducers";
 import { setLocalNotification } from "./utils/helper";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
