@@ -46,6 +46,7 @@ class DeckList extends React.Component {
             return (
               <FlatList
                 data={decks}
+                style={styles.list}
                 keyExtractor={(item, index) => item._id}
                 renderItem={({ item }) => {
                   const cardNum = Object.values(cards).filter(
@@ -82,7 +83,7 @@ class DeckList extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#eeeeee",
     flexDirection: "column",
     alignItems: "stretch"
   }

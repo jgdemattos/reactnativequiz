@@ -9,13 +9,15 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@expo/vector-icons": "^9.0.0",
     "apollo-boost": "^0.1.23",
-    "expo": "^31.0.2",
+    "expo": "^32.0.0",
     "graphql": "^14.0.2",
     "jwt-decode": "^2.2.0",
     "react": "16.5.0",
     "react-apollo": "^2.3.3",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+    "react-native-elements": "^1.0.0-beta7",
     "react-navigation": "^3.0.8",
     "react-redux": "^6.0.0",
     "redux": "^4.0.1"
