@@ -8,17 +8,12 @@ import {
   Button
 } from "react-native";
 import DeckItem from "./DeckItem";
-import {
-  createAppContainer,
-  createStackNavigator,
-  StackActions,
-  NavigationActions
-} from "react-navigation";
+import { createAppContainer, createStackNavigator } from "react-navigation";
 import DeckOptions from "./DeckOptions";
 import DeckPlay from "./DeckPlay";
 import NewQuestion from "./NewQuestion";
 import NewDeck from "./NewDeck";
-
+import { Header } from "react-native-elements";
 import { Query } from "react-apollo";
 import { GET_ALL_DECKS } from "../queries";
 
@@ -92,19 +87,51 @@ const styles = StyleSheet.create({
 const AppNavigator = createStackNavigator(
   {
     DeckList: {
-      screen: DeckList
+      screen: DeckList,
+      navigationOptions: {
+        header: props => (
+          <Header
+            leftComponent={{ icon: "menu", color: "#fff" }}
+            centerComponent={{ text: "MY QUIZ", style: { color: "#fff" } }}
+            rightComponent={{ icon: "home", color: "#fff" }}
+          />
+        ),
+        headerStyle: {
+          backgroundColor: "transparent"
+        }
+      }
     },
     DeckOptions: {
-      screen: DeckOptions
+      screen: DeckOptions,
+      navigationOptions: {
+        headerStyle: {
+          backgroundColor: "#2089dc"
+        }
+      }
     },
     DeckPlay: {
-      screen: DeckPlay
+      screen: DeckPlay,
+      navigationOptions: {
+        headerStyle: {
+          backgroundColor: "#2089dc"
+        }
+      }
     },
     NewQuestion: {
-      screen: NewQuestion
+      screen: NewQuestion,
+      navigationOptions: {
+        headerStyle: {
+          backgroundColor: "#2089dc"
+        }
+      }
     },
     NewDeck: {
-      screen: NewDeck
+      screen: NewDeck,
+      navigationOptions: {
+        headerStyle: {
+          backgroundColor: "#2089dc"
+        }
+      }
     }
   },
   {

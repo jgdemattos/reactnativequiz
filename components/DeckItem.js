@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { ListItem } from "react-native-elements";
 import { Icon } from "react-native-elements";
-import { MaterialIcons } from "@expo/vector-icons";
 
 class DeckItem extends React.Component {
   render() {
