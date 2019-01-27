@@ -13,9 +13,10 @@ import DeckOptions from "./DeckOptions";
 import DeckPlay from "./DeckPlay";
 import NewQuestion from "./NewQuestion";
 import NewDeck from "./NewDeck";
-import { Header } from "react-native-elements";
+
 import { Query } from "react-apollo";
 import { GET_ALL_DECKS } from "../queries";
+import MainHeader from "./MainHeader";
 
 class DeckList extends React.Component {
   cards = {
@@ -89,13 +90,7 @@ const AppNavigator = createStackNavigator(
     DeckList: {
       screen: DeckList,
       navigationOptions: {
-        header: props => (
-          <Header
-            leftComponent={{ icon: "menu", color: "#fff" }}
-            centerComponent={{ text: "MY QUIZ", style: { color: "#fff" } }}
-            rightComponent={{ icon: "home", color: "#fff" }}
-          />
-        ),
+        header: <MainHeader />,
         headerStyle: {
           backgroundColor: "transparent"
         }
