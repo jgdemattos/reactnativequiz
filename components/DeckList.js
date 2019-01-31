@@ -19,6 +19,31 @@ import { GET_ALL_DECKS } from "../queries";
 import MainHeader from "./MainHeader";
 
 class DeckList extends React.Component {
+  state = {
+    search: ""
+  };
+  updateSearch = search => {
+    console.log(search);
+    this.setState({ search });
+  };
+  componentDidMount() {
+    this.props.navigation.setParams({ updateSearch: this.updateSearch });
+  }
+  static navigationOptions = ({ navigation }) => {
+    return {
+      header: <MainHeader updateSearch={navigation.getParam("updateSearch")} />,
+      headerStyle: {
+        backgroundColor: "transparent"
+      }
+      /*       header: (
+        <Button
+          onPress={navigation.getParam('increaseCount')}
+          title="+1"
+          color="#fff"
+        />
+      ), */
+    };
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -34,6 +59,7 @@ class DeckList extends React.Component {
 
             return (
               <FlatList
+                extraData={this.state}
                 data={decks}
                 style={styles.list}
                 keyExtractor={(item, index) => item._id}
@@ -41,7 +67,11 @@ class DeckList extends React.Component {
                   const cardNum = Object.values(cards).filter(
                     card => card.deckId === item._id
                   ).length;
-
+                  if (this.state.search != "") {
+                    if (item.name.indexOf(this.state.search) == -1) {
+                      return null;
+                    }
+                  }
                   return (
                     <TouchableOpacity
                       onPress={() =>
@@ -81,13 +111,13 @@ const styles = StyleSheet.create({
 const AppNavigator = createStackNavigator(
   {
     DeckList: {
-      screen: DeckList,
-      navigationOptions: {
+      screen: DeckList
+      /*      navigationOptions: {
         header: <MainHeader />,
         headerStyle: {
           backgroundColor: "transparent"
         }
-      }
+      } */
     },
     DeckOptions: {
       screen: DeckOptions,

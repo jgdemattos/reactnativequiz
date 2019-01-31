@@ -12,7 +12,7 @@ class DeckItem extends React.Component {
         title={deck}
         badge={{
           value: cardNum,
-          textStyle: { color: "yellow" },
+          textStyle: { color: "white" },
           containerStyle: { marginTop: -5 }
         }}
         subtitle={"cards:" + cardNum}

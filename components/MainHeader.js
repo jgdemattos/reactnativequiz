@@ -8,7 +8,9 @@ class MainHeader extends React.Component {
     searchText: "",
     search: false
   };
-  handleSearch = addCard => {};
+  handleUpdateSearch = search => {
+    this.props.updateSearch(search);
+  };
   render() {
     return !this.state.search ? (
       <Header
@@ -35,6 +37,15 @@ class MainHeader extends React.Component {
               name="chevron-left"
             />
           }
+          searchIcon={
+            <Icon
+              size={30}
+              color="red"
+              onPress={() => this.setState({ search: false })}
+              name="search"
+            />
+          }
+          onChangeText={text => this.handleUpdateSearch(text)}
           placeholder="Search"
         />
       </View>
