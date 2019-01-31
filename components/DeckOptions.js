@@ -1,8 +1,10 @@
 import React from "react";
-import { Animated, StyleSheet, View, Text, Button } from "react-native";
+import { Animated, StyleSheet, View } from "react-native";
+import { Text, Button, Icon, Card } from "react-native-elements";
 
 import { Query } from "react-apollo";
 import { GET_DECK } from "../queries";
+import { Col, Row, Grid } from "react-native-easy-grid";
 
 class FadeInView extends React.Component {
   state = {
@@ -15,7 +17,7 @@ class FadeInView extends React.Component {
       this.state.fadeAnim, // The animated value to drive
       {
         toValue: 1, // Animate to opacity: 1 (opaque)
-        duration: 4000 // Make it take a while
+        duration: 3000 // Make it take a while
       }
     ).start(); // Starts the animation
   }
@@ -49,36 +51,79 @@ class DeckOptions extends React.Component {
             if (error) return <Text>Error</Text>;
             deck = data.getDeck;
             cards = data.getAllCards;
-            //cardNum = data.getCardsOf.length;
             const cardNum = Object.values(cards).filter(
               card => card.deckId === this.props.navigation.state.params.entryId
             ).length;
             return (
               <FadeInView style={styles.fade}>
-                <Text>{deck.deckName}</Text>
-                <Text>{"number of cards: " + cardNum}</Text>
-                <Button
-                  style={styles.item}
-                  onPress={() =>
-                    this.props.navigation.navigate("NewQuestion", {
-                      entryId: deck._id
-                    })
-                  }
-                  title="Create New Question"
-                  color="#CCC"
-                  accessibilityLabel="Edit this deck"
-                />
-                <Button
-                  style={styles.item}
-                  onPress={() =>
-                    this.props.navigation.navigate("DeckPlay", {
-                      entryId: deck._id
-                    })
-                  }
-                  title="Start a Quiz"
-                  color="#841584"
-                  accessibilityLabel="Play this deck"
-                />
+                <Card style={styles.card} title={deck.name}>
+                  <Text>{"Number of cards: " + cardNum}</Text>
+                </Card>
+
+                <Grid>
+                  <Col>
+                    <Row
+                      style={styles.singleRow}
+                      style={{
+                        flex: 1,
+                        flexDirection: "row"
+                      }}
+                    >
+                      <Col
+                        style={{
+                          flex: 1,
+                          justifyContent: "center",
+                          flexDirection: "column"
+                        }}
+                      >
+                        <View style={styles.iconBack}>
+                          <Icon
+                            name="play-circle-filled"
+                            size={135}
+                            color="green"
+                            title="sdfds"
+                            onPress={() =>
+                              this.props.navigation.navigate("DeckPlay", {
+                                entryId: deck._id
+                              })
+                            }
+                          />
+                          <Text>Play this deck</Text>
+                        </View>
+                      </Col>
+                    </Row>
+                    <Row style={styles.doubleRow}>
+                      <Col style={styles.doubleColLeft}>
+                        <View style={styles.iconBack}>
+                          <Icon
+                            name="add"
+                            size={90}
+                            color="blue"
+                            title="sdfds"
+                            onPress={() =>
+                              this.props.navigation.navigate("NewQuestion", {
+                                entryId: deck._id
+                              })
+                            }
+                          />
+                          <Text>Add a card</Text>
+                        </View>
+                      </Col>
+                      <Col style={styles.doubleColRight}>
+                        <View style={styles.iconBack}>
+                          <Icon
+                            name="delete"
+                            size={90}
+                            color="red"
+                            title="sdfds"
+                            onPress={() => {}}
+                          />
+                          <Text>Delete this deck</Text>
+                        </View>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Grid>
               </FadeInView>
             );
           }}
@@ -90,25 +135,62 @@ class DeckOptions extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: "stretch",
-    flexDirection: "row",
-    justifyContent: "center"
+    flex: 1
   },
   fade: {
     flex: 1,
-    backgroundColor: "#fff",
     flexDirection: "column",
-    justifyContent: "center",
-    backgroundColor: "powderblue"
+    alignContent: "flex-start",
+    justifyContent: "flex-start",
+    alignItems: "stretch",
+    margin: 0,
+    padding: 0,
+    backgroundColor: "#dddddd"
   },
-  item: {
-    padding: 20,
-    marginLeft: 40,
-    marginRight: 40,
-    marginTop: 80,
-    marginBottom: 80,
-    elevation: 3
+  card: {
+    elevation: 4,
+    shadowOffset: { width: 5, height: 5 },
+    shadowColor: "grey",
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#ddd",
+    borderBottomWidth: 0,
+    margin: 15,
+    padding: 15,
+    backgroundColor: "#ffffff"
+  },
+  doubleRow: {},
+  doubleColLeft: {
+    //backgroundColor: "blue"
+    height: 180
+  },
+  doubleColRight: {
+    //backgroundColor: "red"
+    height: 180
+  },
+  singleRow: {
+    //backgroundColor: "green",
+  },
+  icon: {},
+  iconBack: {
+    elevation: 4,
+    shadowOffset: { width: 5, height: 5 },
+    shadowColor: "grey",
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#ddd",
+    borderBottomWidth: 0,
+    margin: 15,
+    padding: 15,
+    backgroundColor: "#ffffff",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    height: null
   }
 });
 

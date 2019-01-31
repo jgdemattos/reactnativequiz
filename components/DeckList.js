@@ -19,13 +19,6 @@ import { GET_ALL_DECKS } from "../queries";
 import MainHeader from "./MainHeader";
 
 class DeckList extends React.Component {
-  cards = {
-    0: {
-      deck: 0,
-      cardQuestion: "whos good"
-    }
-  };
-
   render() {
     return (
       <View style={styles.container}>
