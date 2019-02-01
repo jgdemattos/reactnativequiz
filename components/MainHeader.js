@@ -11,6 +11,10 @@ class MainHeader extends React.Component {
   handleUpdateSearch = search => {
     this.props.updateSearch(search);
   };
+  handleCancelSearch = () => {
+    this.setState({ search: false });
+    this.props.updateSearch("");
+  };
   render() {
     return !this.state.search ? (
       <Header
@@ -33,7 +37,7 @@ class MainHeader extends React.Component {
             <Icon
               size={30}
               color="red"
-              onPress={() => this.setState({ search: false })}
+              onPress={() => this.handleCancelSearch()}
               name="chevron-left"
             />
           }
@@ -41,7 +45,7 @@ class MainHeader extends React.Component {
             <Icon
               size={30}
               color="red"
-              onPress={() => this.setState({ search: false })}
+              onPress={() => this.handleCancelSearch()}
               name="search"
             />
           }

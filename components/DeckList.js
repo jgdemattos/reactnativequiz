@@ -23,7 +23,6 @@ class DeckList extends React.Component {
     search: ""
   };
   updateSearch = search => {
-    console.log(search);
     this.setState({ search });
   };
   componentDidMount() {
@@ -112,19 +111,14 @@ const AppNavigator = createStackNavigator(
   {
     DeckList: {
       screen: DeckList
-      /*      navigationOptions: {
-        header: <MainHeader />,
-        headerStyle: {
-          backgroundColor: "transparent"
-        }
-      } */
     },
     DeckOptions: {
       screen: DeckOptions,
       navigationOptions: {
         headerStyle: {
           backgroundColor: "#2089dc"
-        }
+        },
+        headerTintColor: "white"
       }
     },
     DeckPlay: {
@@ -132,7 +126,8 @@ const AppNavigator = createStackNavigator(
       navigationOptions: {
         headerStyle: {
           backgroundColor: "#2089dc"
-        }
+        },
+        headerTintColor: "white"
       }
     },
     NewQuestion: {
@@ -140,7 +135,8 @@ const AppNavigator = createStackNavigator(
       navigationOptions: {
         headerStyle: {
           backgroundColor: "#2089dc"
-        }
+        },
+        headerTintColor: "white"
       }
     },
     NewDeck: {
@@ -148,7 +144,8 @@ const AppNavigator = createStackNavigator(
       navigationOptions: {
         headerStyle: {
           backgroundColor: "#2089dc"
-        }
+        },
+        headerTintColor: "white"
       }
     }
   },
