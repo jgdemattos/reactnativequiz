@@ -3530,16 +3530,6 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
-lodash.chunk@*:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/lodash.chunk/-/lodash.chunk-4.2.0.tgz#66e5ce1f76ed27b4303d8c6512e8d1216e8106bc"
-  integrity sha1-ZuXOH3btJ7QwPYxlEujRIW6BBrw=
-
-lodash.clamp@*:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/lodash.clamp/-/lodash.clamp-4.0.3.tgz#5c24bedeeeef0753560dc2b4cb4671f90a6ddfaa"
-  integrity sha1-XCS+3u7vB1NWDcK0y0Zx+Qpt36o=
-
 lodash.filter@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.filter/-/lodash.filter-4.6.0.tgz#668b1d4981603ae1cc5a6fa760143e480b4c4ace"
@@ -3594,11 +3584,6 @@ lodash.pick@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.pick/-/lodash.pick-4.4.0.tgz#52f05610fff9ded422611441ed1fc123a03001b3"
   integrity sha1-UvBWEP/53tQiYRRB7R/BI6AwAbM=
-
-lodash.sortby@*:
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
-  integrity sha1-7dFMgk4sycHgsKG0K7UhBRakJDg=
 
 lodash.throttle@^4.1.1:
   version "4.1.1"
@@ -4613,7 +4598,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@*, prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   integrity sha512-3pboPvLiWD7dkI3qf3KbUe6hKFKa52w+AE0VCqECtf+QHAKgOL37tTaNCnuX1nAAQ4ZhyP+kYVKf8rLmJ/feDQ==
@@ -4869,16 +4854,6 @@ react-navigation-drawer@1.0.5:
   dependencies:
     react-native-tab-view "^1.2.0"
 
-react-navigation-fluid-transitions@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/react-navigation-fluid-transitions/-/react-navigation-fluid-transitions-0.3.0.tgz#75f0f22e91ae1a4b05e07aabfefda51957cc3896"
-  integrity sha512-E9TxJUaMpfJR7GO3wnaHneGfF5+JxZop5w/RH1eoASO+4la95yMdYQhbAJ7w91K52ckW1A+JRvcm8zImuP+yvA==
-  dependencies:
-    lodash.chunk "*"
-    lodash.clamp "*"
-    lodash.sortby "*"
-    prop-types "*"
-
 react-navigation-stack@1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/react-navigation-stack/-/react-navigation-stack-1.0.6.tgz#5c2b6617dccc1de6001b387cd967baa6b205132d"
@@ -4893,6 +4868,11 @@ react-navigation-tabs@1.0.2:
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
     react-native-tab-view "^1.0.0"
+
+react-navigation-transitions@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/react-navigation-transitions/-/react-navigation-transitions-1.0.8.tgz#59ecc341c6da86a616c6a64674a36882d780b2e6"
+  integrity sha512-NDa6ScctQFAICys7OjVAguHyLEfCXQv+9T+lF2uKgy68tbR1xJKAjXE8Pg07r6LUnkuKr7gqFvwxDFZZmF69aA==
 
 react-navigation@^3.0.8:
   version "3.0.9"

@@ -13,7 +13,7 @@ import DeckOptions from "./DeckOptions";
 import DeckPlay from "./DeckPlay";
 import NewQuestion from "./NewQuestion";
 import NewDeck from "./NewDeck";
-
+import { fromLeft, fromRight, zoomIn } from "react-navigation-transitions";
 import { Query } from "react-apollo";
 import { GET_ALL_DECKS } from "../queries";
 import MainHeader from "./MainHeader";
@@ -34,13 +34,6 @@ class DeckList extends React.Component {
       headerStyle: {
         backgroundColor: "transparent"
       }
-      /*       header: (
-        <Button
-          onPress={navigation.getParam('increaseCount')}
-          title="+1"
-          color="#fff"
-        />
-      ), */
     };
   };
   render() {
@@ -107,6 +100,39 @@ const styles = StyleSheet.create({
   }
 });
 
+const handleCustomTransition = ({ scenes }) => {
+  const prevScene = scenes[scenes.length - 2];
+  const nextScene = scenes[scenes.length - 1];
+
+  // Custom transitions go there
+  if (
+    prevScene &&
+    prevScene.route.routeName === "DeckList" &&
+    nextScene.route.routeName === "DeckOptions"
+  ) {
+    return fromRight(1000);
+  } else if (
+    prevScene &&
+    prevScene.route.routeName === "DeckOptions" &&
+    nextScene.route.routeName === "DeckList"
+  ) {
+    return fromLeft(1000);
+  } else if (
+    prevScene &&
+    prevScene.route.routeName === "DeckOptions" &&
+    nextScene.route.routeName === "DeckPlay"
+  ) {
+    return zoomIn(1000);
+  } else if (
+    prevScene &&
+    prevScene.route.routeName === "DeckPlay" &&
+    nextScene.route.routeName === "DeckOptions"
+  ) {
+    return fromLeft();
+  }
+  return fromLeft(1000);
+};
+
 const AppNavigator = createStackNavigator(
   {
     DeckList: {
@@ -150,7 +176,8 @@ const AppNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: "DeckList"
+    initialRouteName: "DeckList",
+    transitionConfig: nav => handleCustomTransition(nav)
   }
 );
 

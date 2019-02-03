@@ -20,7 +20,7 @@
     "react-native-easy-grid": "^0.2.0",
     "react-native-elements": "^1.0.0-beta7",
     "react-navigation": "^3.0.8",
-    "react-navigation-fluid-transitions": "^0.3.0",
+    "react-navigation-transitions": "^1.0.8",
     "react-redux": "^6.0.0",
     "redux": "^4.0.1"
   },

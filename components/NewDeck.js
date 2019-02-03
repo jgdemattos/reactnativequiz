@@ -22,9 +22,7 @@ class NewDeck extends React.Component {
   handleAddDeckName = deckName => {
     this.setState({ deckName });
   };
-  /*   handleAddDeckName = deckName => {
-    this.setState({ deckName });
-  }; */
+
   shouldComponentUpdate(nextProps, nextState) {
     if (nextState.nextId) {
       nextProps.navigation.navigate("DeckOptions", {
