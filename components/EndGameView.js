@@ -1,7 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, TextInput, View, Button } from "react-native";
-import { Header, SearchBar, Icon } from "react-native-elements";
-import { Constants } from "expo";
+import { StyleSheet, Text, View, Button } from "react-native";
 
 class EndGameView extends React.Component {
   state = {

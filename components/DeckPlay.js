@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Button } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import { Query } from "react-apollo";
 import { GET_ALL_CARDS } from "../queries";
@@ -47,13 +47,15 @@ class DeckPlay extends React.Component {
               reset={this.reset}
             />
           ) : (
-            <CardPlay
-              currentCard={this.state.currentCard}
-              score={this.state.score}
-              card={selectedCards[this.state.currentCard]}
-              length={selectedCards.length}
-              updateScoreAndCurrentCard={this.updateScoreAndCurrentCard}
-            />
+            <View style={styles.container}>
+              <CardPlay
+                currentCard={this.state.currentCard}
+                score={this.state.score}
+                card={selectedCards[this.state.currentCard]}
+                length={selectedCards.length}
+                updateScoreAndCurrentCard={this.updateScoreAndCurrentCard}
+              />
+            </View>
           );
         }}
       </Query>
@@ -64,19 +66,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    alignItems: "stretch",
-    justifyContent: "center",
-    borderRadius: 2,
-    backgroundColor: "white",
-    padding: 20,
-    marginLeft: 10,
-    marginRight: 10,
-    marginTop: 8,
-    marginBottom: 8,
-    shadowOffset: { width: 10, height: 10 },
-    shadowColor: "black",
-    shadowOpacity: 1,
-    elevation: 3
+    backgroundColor: "#dddddd"
   }
 });
 
