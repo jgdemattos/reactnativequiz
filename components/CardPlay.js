@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Button } from "react-native";
 import { Text, Icon } from "react-native-elements";
+import CardFlip from "react-native-card-flip";
 
 class CardPlay extends React.Component {
   state = {
@@ -14,48 +15,56 @@ class CardPlay extends React.Component {
     this.setState({
       showAnswer: false
     });
+    this.card.flip();
   };
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.question}>
-          <Text h4 style={styles.numQuestions}>
-            {this.props.currentCard + 1 + "/" + this.props.length}
-          </Text>
-          <Text h4>Question: </Text>
-          <Text h3>{this.props.card.question}</Text>
+      <CardFlip style={styles.container} ref={card => (this.card = card)}>
+        <View style={styles.card}>
+          <View style={styles.question}>
+            <Text h4 style={styles.numQuestions}>
+              {this.props.currentCard + 1 + "/" + this.props.length}
+            </Text>
+            <Text h4>Question: </Text>
+            <Text h3>{this.props.card.question}</Text>
+          </View>
+          <View style={styles.flip}>
+            <Icon
+              name="rotate-right"
+              raised
+              type="font-awesome"
+              color="#00aced"
+              size={50}
+              onPress={() => this.card.flip()}
+            />
+          </View>
         </View>
-        <View style={styles.flip}>
-          <Icon
-            name="rotate-right"
-            raised
-            type="font-awesome"
-            color="#00aced"
-            size={50}
-            onPress={() => this.setState({ showAnswer: true })}
-          />
-          {this.state.showAnswer && <Text>{this.props.card.answer}</Text>}
+        <View style={styles.card}>
+          <View>{<Text>{this.props.card.answer}</Text>}</View>
+          <View style={styles.menu}>
+            <Button
+              onPress={() => this.handleUpdateScoreAndCurrentCard(true)}
+              title="Correct"
+              color="green"
+              accessibilityLabel="Play this deck"
+            />
+            <Button
+              onPress={() => this.handleUpdateScoreAndCurrentCard(false)}
+              title="Incorrect"
+              color="red"
+              accessibilityLabel="Play this deck"
+            />
+          </View>
         </View>
-        <View style={styles.menu}>
-          <Button
-            onPress={() => this.handleUpdateScoreAndCurrentCard(true)}
-            title="Correct"
-            color="green"
-            accessibilityLabel="Play this deck"
-          />
-          <Button
-            onPress={() => this.handleUpdateScoreAndCurrentCard(false)}
-            title="Incorrect"
-            color="red"
-            accessibilityLabel="Play this deck"
-          />
-        </View>
-      </View>
+      </CardFlip>
     );
   }
 }
 const styles = StyleSheet.create({
   container: {
+    flex: 1
+  },
+  card: {
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
