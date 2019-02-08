@@ -40,7 +40,9 @@ class CardPlay extends React.Component {
           </View>
         </View>
         <View style={styles.card}>
-          <View>{<Text>{this.props.card.answer}</Text>}</View>
+          <View style={styles.answer}>
+            {<Text h3>{this.props.card.answer}</Text>}
+          </View>
           <View style={styles.menu}>
             <Button
               onPress={() => this.handleUpdateScoreAndCurrentCard(true)}
@@ -87,8 +89,11 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   flip: {
-    flex: 4,
+    flex: 2,
     justifyContent: "center"
+  },
+  answer: {
+    flex: 8
   },
   menu: {
     flex: 2,

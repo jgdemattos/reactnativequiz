@@ -2,8 +2,8 @@ import React from "react";
 import { Animated, StyleSheet, View } from "react-native";
 import { Text, Button, Icon, Card } from "react-native-elements";
 
-import { Query } from "react-apollo";
-import { GET_DECK } from "../queries";
+import { Query, Mutation } from "react-apollo";
+import { GET_DECK, DELETE_DECK, GET_ALL_DECKS } from "../queries";
 import { Col, Row, Grid } from "react-native-easy-grid";
 
 class FadeInView extends React.Component {
@@ -39,6 +39,11 @@ class FadeInView extends React.Component {
 }
 
 class DeckOptions extends React.Component {
+  handleDeleteDeck = deleteDeck => {
+    deleteDeck().then(({ data }) => {
+      this.props.navigation.navigate("DeckList");
+    });
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -111,13 +116,41 @@ class DeckOptions extends React.Component {
                       </Col>
                       <Col style={styles.doubleColRight}>
                         <View style={styles.iconBack}>
-                          <Icon
-                            name="delete"
-                            size={90}
-                            color="red"
-                            title="sdfds"
-                            onPress={() => {}}
-                          />
+                          <Mutation
+                            mutation={DELETE_DECK}
+                            variables={{ _id: deck._id }}
+                            update={(cache, { data: { deleteDeck } }) => {
+                              const {
+                                getAllDecks,
+                                getAllCards
+                              } = cache.readQuery({
+                                query: GET_ALL_DECKS
+                              });
+                              cache.writeQuery({
+                                query: GET_ALL_DECKS,
+                                data: {
+                                  getAllDecks: getAllDecks.filter(
+                                    deck => deck._id !== deleteDeck._id
+                                  ),
+                                  getAllCards
+                                }
+                              });
+                            }}
+                          >
+                            {deleteDeck => {
+                              return (
+                                <Icon
+                                  name="delete"
+                                  size={90}
+                                  color="red"
+                                  title="sdfds"
+                                  onPress={() =>
+                                    this.handleDeleteDeck(deleteDeck)
+                                  }
+                                />
+                              );
+                            }}
+                          </Mutation>
                           <Text>Delete this deck</Text>
                         </View>
                       </Col>

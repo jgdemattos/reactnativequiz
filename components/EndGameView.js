@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     elevation: 3
   },
   menu: {
-    flex: 1,
+    flex: 2,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end"
   },
   result: {
+    flex: 8,
     alignSelf: "center"
   }
 });

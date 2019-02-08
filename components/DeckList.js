@@ -122,7 +122,7 @@ const handleCustomTransition = ({ scenes }) => {
     prevScene.route.routeName === "DeckOptions" &&
     nextScene.route.routeName === "DeckPlay"
   ) {
-    return zoomIn(1000);
+    return zoomIn(500);
   } else if (
     prevScene &&
     prevScene.route.routeName === "DeckPlay" &&

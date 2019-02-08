@@ -18,7 +18,6 @@ class MainHeader extends React.Component {
   render() {
     return !this.state.search ? (
       <Header
-        leftComponent={{ icon: "menu", color: "#fff" }}
         centerComponent={{ text: "MY QUIZ", style: { color: "#fff" } }}
         rightComponent={
           <Icon

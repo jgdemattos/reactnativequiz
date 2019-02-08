@@ -47,6 +47,15 @@ export const ADD_DECK = gql`
   }
 `;
 
+export const DELETE_DECK = gql`
+  mutation DeleteDeck($_id: ID!) {
+    deleteDeck(_id: $_id) {
+      _id
+      name
+    }
+  }
+`;
+
 export const GET_DECK = gql`
   query Deck($_id: ID!) {
     getDeck(_id: $_id) {
