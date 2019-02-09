@@ -5,15 +5,13 @@ First Udacity React Native course project
 
 A simple self-evaluation app, created with react native, communicating to the [node server](https://github.com/jgdemattos/nativequiznodeserver), with graphql, powered by apollo client and server. Data persisted in mongoDB.
 
-A working demo can be found here....
-
 </div>
 
 ## Installation
 
 ```sh
-// with npm
-npm install
+// with yarn
+yarn
 ```
 
 ## Run
