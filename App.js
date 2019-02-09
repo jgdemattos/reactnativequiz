@@ -6,7 +6,7 @@ import { ApolloProvider } from "react-apollo";
 import { Header } from "react-native-elements";
 
 const client = new ApolloClient({
-  uri: "http://192.168.100.4:4444/graphql"
+  uri: "https://reactnativequizserver.herokuapp.com/graphql"
 });
 
 export default class App extends React.Component {
